@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main (int argc, char *argv[]) {
+
+  pid_t childpid = 0;
+  int i, n, c;
+
+  if (argc != 2) {
+    fprintf(stderr, "Usage: %s processes\n", argv[0]);
+    return 1;
+  }
+/* while ((c = getopt(argc, argv, "n")) != -1) {
+    switch (c) {
+    case 'n':
+        /* option n is the max number of processes generated*/
+        break; 
+     default:
+         perror("proc_fan: Error: Detailed error message" );
+        break;
+  }*/
+
+ n = atoi(argv[1]);
+  for(i = 1; i < n; i++){
+    if((childpid = fork()) <= 0)
+      break; 
+
+  fprintf(stderr, "i:%d process ID:%ld parent ID:%ld child ID:%ld\n",
+          i, (long)getpid(), (long)getppid(), (long)childpid);
+  }
+
+  return 0;
+}
+
